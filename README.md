@@ -1,0 +1,2 @@
+# easyScoreBoard
+An easy scoreboard.
