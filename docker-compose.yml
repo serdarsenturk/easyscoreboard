@@ -11,9 +11,10 @@ services:
   
   database:
       environment: 
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: mysecretpassword
-        POSTGRES_DB: postgres
+        POSTGRES_USER: "${POSTGRES_USER}"
+        POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        POSTGRES_DB: easyscoreboard
+      env_file: .env
       image: postgres:latest
       ports: 
         - 5405:5432
