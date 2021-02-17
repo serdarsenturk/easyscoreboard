@@ -17,6 +17,6 @@ services:
       env_file: .env
       image: postgres:latest
       ports: 
-        - 5405:5432
+        - 5432:5432
       volumes: 
         - ~/dockerdata/postgresql:/var/lib/postgresql/data
