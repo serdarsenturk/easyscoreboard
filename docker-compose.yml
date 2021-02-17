@@ -6,7 +6,7 @@ services:
     ports: 
       - 5000:5000
     volumes: 
-      - ./app:/usr/src/app/app
+      - ./easyscoreboard/:/usr/src/app
     restart: always
   
   database:
