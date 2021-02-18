@@ -21,6 +21,13 @@ class ScoreBoard(db.Model):
     def __repr__(self):
         return '<ScoreBoard %r>' % self.name 
 
+    @property
+    def serialize(self):
+       return {
+           'id': self.id,
+           'name' : self.name
+       }
+
 @app.route('/')
 def homeView():
     return "<h1>Welcome to Easy Score Board.</h1>"
