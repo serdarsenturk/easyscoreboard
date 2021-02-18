@@ -1,10 +1,11 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 app.config.from_mapping(
-    SQLALCHEMY_DATABASE_URI='postgresql://postgres:****@0.0.0.0:5432/easyscoreboard',
+    SQLALCHEMY_DATABASE_URI=os.environ.get('DB_CONNECTION_STRING'),
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 db = SQLAlchemy(app)
