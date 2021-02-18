@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask import jsonify
 
 app = Flask(__name__)
 app.config.from_mapping(
@@ -34,5 +35,4 @@ def homeView():
 
 @app.route('/api/v1/hello', methods = ["GET"])
 def readById():
-    scoreboard = ScoreBoard.query.filter_by(id=1)
-    return render_template("show_by_id.html", scoreboards=scoreboard)
+    return jsonify(ScoreBoardById=[scoreboard.serialize for scoreboard in ScoreBoard.query.filter_by(id=1)])
