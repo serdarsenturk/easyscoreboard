@@ -38,7 +38,7 @@ alembic upgrade head
 
 Downgrading
 ```
-alembic upgrade head
+alembic upgrade base
 ```
 
 Getting Information:
