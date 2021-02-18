@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_mapping(
-    SQLALCHEMY_DATABASE_URI='postgresql://postgres:mysecretpassword@l0.0.0.0:5432/easyscoreboard',
+    SQLALCHEMY_DATABASE_URI='postgresql://postgres:****@0.0.0.0:5432/easyscoreboard',
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 db = SQLAlchemy(app)
