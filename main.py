@@ -24,5 +24,6 @@ def homeView():
     return "<h1>Welcome to Easy Score Board.</h1>"
 
 @app.route('/api/v1/hello', methods = ["GET"])
-def printHello():
-    return 'Hello, World'
+def readById():
+    scoreboard = ScoreBoard.query.filter_by(id=1)
+    return render_template("show_by_id.html", scoreboards=scoreboard)
