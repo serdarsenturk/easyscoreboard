@@ -1,12 +1,11 @@
 from flask import Flask
-from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 import os
 from flask import jsonify
 
 app = Flask(__name__)
 app.config.from_mapping(
-    SQLALCHEMY_DATABASE_URI=os.environ.get('DB_CONNECTION_STRING'),
+    SQLALCHEMY_DATABASE_URI='postgresql://postgres:mysecretpassword@0.0.0.0:5432/easyscoreboard',
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 db = SQLAlchemy(app)
@@ -16,18 +15,12 @@ db = SQLAlchemy(app)
 #model classes which accepts keyword arguments for all its columns and relationships. 
 
 class ScoreBoard(db.Model):
+    __tablename__ = 'score_boards'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
 
     def __repr__(self):
         return '<ScoreBoard %r>' % self.name 
-
-    @property
-    def serialize(self):
-       return {
-           'id': self.id,
-           'name' : self.name
-       }
 
 @app.route('/')
 def homeView():
@@ -35,4 +28,5 @@ def homeView():
 
 @app.route('/api/v1/hello', methods = ["GET"])
 def readById():
-    return jsonify(ScoreBoardById=[scoreboard.serialize for scoreboard in ScoreBoard.query.filter_by(id=1)])
+    score_board = ScoreBoard.query.get(1)
+    return jsonify(id=score_board.id, name=score_board.name)
