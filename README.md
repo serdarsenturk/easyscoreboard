@@ -18,11 +18,18 @@ docker exec -it mypostgresql psql -U postgres -c "CREATE DATABASE testdb1 ENCODI
 docker exec -t mypostgresql psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE testdb1 TO postgres;"
 ```
 
-`Authenticate to start using as postgres user`
+`Authenticate to start using as postgres user:`
 
 ```bash
 docker exec -it mypostgresql psql -U postgres testdb1
 ```
 
+## Alembic startup configuration
+
+`Export DB_CONNECTION_STRING URI:`
+
+```
+export DB_CONNECTION_STRING=postgresql://postgres:mysecretpassword@0.0.0.0:5432/easyscoreboard
+```
 
 
