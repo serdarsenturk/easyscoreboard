@@ -18,12 +18,12 @@ depends_on = None
 
 def upgrade():
     op.create_table(
-        'scoreboard',
+        'score_boards',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('name', sa.String(25), nullable=False)
     )
 
 
 def downgrade():
-    op.drop_table('scoreboard')
+    op.drop_table('score_boards')
     
