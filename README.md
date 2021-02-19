@@ -1,6 +1,21 @@
 # Easy Score Board
 An easy scoreboard.
 
+# How to set up Python development environment
+
+```
+mkdir easyscoreboard
+cd easyscoreboard
+python3 -m venv env
+source env/bin/activate
+```
+
+`Flask Setup:`
+```bash
+pip3 install flask gunicorn
+pip3 freeze > requirements.txt
+pip3 install -r requirements.txt
+```
 
 ## How to run PostgreSQL in Docker?
 
