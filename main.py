@@ -1,11 +1,32 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+import os
+from flask import jsonify
 
 app = Flask(__name__)
+app.config.from_mapping(
+    SQLALCHEMY_DATABASE_URI='postgresql://postgres:mysecretpassword@0.0.0.0:5432/easyscoreboard',
+    SQLALCHEMY_TRACK_MODIFICATIONS=False
+)
+db = SQLAlchemy(app)
+
+#Note how we never defined a __init__ method on the ScoreBoard class?
+#That’s because SQLAlchemy adds an implicit constructor to all 
+#model classes which accepts keyword arguments for all its columns and relationships. 
+
+class ScoreBoard(db.Model):
+    __tablename__ = 'score_boards'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<ScoreBoard %r>' % self.name 
 
 @app.route('/')
 def homeView():
     return "<h1>Welcome to Easy Score Board.</h1>"
 
 @app.route('/api/v1/hello', methods = ["GET"])
-def printHello():
-    return 'Hello, World'
+def readById():
+    score_board = ScoreBoard.query.get(1)
+    return jsonify(id=score_board.id, name=score_board.name)
