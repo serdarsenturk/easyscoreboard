@@ -1,0 +1,18 @@
+# Statement for enabling the development environment
+DEBUG = True
+
+import os
+
+# Define the database - we are working with
+# Postgresql for this example
+SQLALCHEMY_DATABASE_URI = os.environ['DB_CONNECTION_STRING']
+
+# Enable protection against *Cross-site Request Forgery (CSRF)*
+CSRF_ENABLED = True
+
+# Use a secure, unique and absolutely secret key for
+# signing the data.
+CSRF_SESSION_KEY = "secret"
+
+# Secret key for signing cookies
+SECRET_KEY = "secret"

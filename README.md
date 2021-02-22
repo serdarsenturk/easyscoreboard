@@ -17,6 +17,12 @@ pip3 freeze > requirements.txt
 pip3 install -r requirements.txt
 ```
 
+`Start to Flask app following commands:`
+```
+export FLASK_APP=run.py
+flask run
+```
+
 ## How to run PostgreSQL in Docker?
 
 `Start PostgreSQL using:`
