@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
 #Define the WSGI application object
 app = Flask(__name__)
+ma = Marshmallow(app)
 
 # Configurations
 app.config.from_object('config')
