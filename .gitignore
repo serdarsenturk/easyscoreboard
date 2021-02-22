@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 postgres-data
-.idea
 .Python
 build/
 develop-eggs/
