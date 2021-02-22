@@ -11,7 +11,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 # Import a module / component using its blueprint handler variable (ex./url)
-from app.api.scoreboard import url as api
+from app.api.scoreboard import scoreboard as api
 
 #Register blueprint(s)
 app.register_blueprint(api)
