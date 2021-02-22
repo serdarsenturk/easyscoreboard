@@ -11,3 +11,6 @@ def readById():
     return jsonify(id=score_board.id, name=score_board.name)
 
 @scoreboard.route('scoreboards', methods=["GET"])
+def return_score_boards():
+    score_boards = ScoreBoard.query.all()
+    return jsonify(score_boards_schema.dump(score_boards))
