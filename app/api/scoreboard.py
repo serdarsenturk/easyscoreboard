@@ -5,9 +5,9 @@ from app.schema.scoreboard import score_boards_schema, score_board_schema
 
 scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/')
 
-@scoreboard.route('hello', methods=["GET"])
-def readById():
-    score_board = ScoreBoard.query.get(1)
+@scoreboard.route('scoreboards/<id>', methods=["GET"])
+def readById(id):
+    score_board = ScoreBoard.query.get(id)
     return jsonify(score_board_schema.dump(score_board))
 
 @scoreboard.route('scoreboards', methods=["GET"])
