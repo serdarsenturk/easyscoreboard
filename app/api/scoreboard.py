@@ -25,3 +25,4 @@ def create_scoreboard():
     db.session.commit()
     return scoreboard_schema.dump(new_scoreboard)
 
+@scoreboard.route('/<id>', methods=["PUT"])
