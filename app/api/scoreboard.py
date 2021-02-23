@@ -1,15 +1,14 @@
 from flask import Blueprint, jsonify, request
-
 from app import db
 from app.models.scoreboard import ScoreBoard
-from app.schema.scoreboard import score_boards_schema, score_board_schema
+from app.schema.scoreboard import scoreboards_schema, scoreboard_schema
 
-scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/')
+scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/scoreboards')
 
-@scoreboard.route('scoreboards/<id>', methods=["GET"])
+@scoreboard.route('<id>', methods=["GET"])
 def readById(id):
     score_board = ScoreBoard.query.get(id)
-    return jsonify(score_board_schema.dump(score_board))
+    return jsonify(scoreboard_schema.dump(score_board))
 
 @scoreboard.route('scoreboards', methods=["GET"])
 def return_score_boards():
