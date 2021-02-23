@@ -26,3 +26,11 @@ def create_scoreboard():
     return scoreboard_schema.dump(new_scoreboard)
 
 @scoreboard.route('/<id>', methods=["PUT"])
+def modify_scoreboard_by_id(id):
+    scoreboard = ScoreBoard.query.get(id)
+    name = request.json['name']
+
+    scoreboard.name = name
+
+    db.session.commit()
+    return scoreboard_schema.dump(scoreboard)
