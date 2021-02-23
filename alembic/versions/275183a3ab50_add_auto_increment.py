@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('score_boards', 'id' ,autoincrement=None)
+    op.alter_column('score_boards', 'id' ,autoincrement=True)
 
 def downgrade():
     pass
