@@ -10,19 +10,18 @@ def readById(id):
     score_board = ScoreBoard.query.get(id)
     return jsonify(scoreboard_schema.dump(score_board))
 
-@scoreboard.route('scoreboards', methods=["GET"])
-def return_score_boards():
-    score_boards = ScoreBoard.query.all()
-    return jsonify(score_boards_schema.dump(score_boards))
+@scoreboard.route('/', methods=["GET"])
+def return_scoreboards():
+    scoreboards = ScoreBoard.query.all()
+    return jsonify(scoreboards_schema.dump(scoreboards))
 
-@scoreboard.route('scoreboards', methods=["POST"])
-def post_score_boards():
-    id = request.json['id']
+@scoreboard.route('/', methods=["POST"])
+def post_scoreboards():
     name = request.json['name']
 
-    new_score_board = ScoreBoard(id=id, name=name)
+    new_scoreboard = ScoreBoard(name=name)
 
-    db.session.add(new_score_board)
+    db.session.add(new_scoreboard)
     db.session.commit()
-    return score_board_schema.dump(new_score_board)
+    return scoreboard_schema.dump(new_scoreboard)
 
