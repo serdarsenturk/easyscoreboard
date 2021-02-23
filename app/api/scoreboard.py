@@ -7,8 +7,8 @@ scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/scoreboards')
 
 @scoreboard.route('<id>', methods=["GET"])
 def get_scoreboard_by_id(id):
-    score_board = ScoreBoard.query.get(id)
-    return jsonify(scoreboard_schema.dump(score_board))
+    scoreboard = ScoreBoard.query.get(id)
+    return jsonify(scoreboard_schema.dump(scoreboard))
 
 @scoreboard.route('/', methods=["GET"])
 def list_scoreboards():
