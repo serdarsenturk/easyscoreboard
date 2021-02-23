@@ -7,8 +7,8 @@ scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/scoreboards')
 
 @scoreboard.route('<id>', methods=["GET"])
 def get_scoreboard_by_id(id):
-    score_board = ScoreBoard.query.get(id)
-    return jsonify(scoreboard_schema.dump(score_board))
+    scoreboard = ScoreBoard.query.get(id)
+    return jsonify(scoreboard_schema.dump(scoreboard))
 
 @scoreboard.route('/', methods=["GET"])
 def list_scoreboards():
@@ -25,3 +25,12 @@ def create_scoreboard():
     db.session.commit()
     return scoreboard_schema.dump(new_scoreboard)
 
+@scoreboard.route('/<id>', methods=["PUT"])
+def modify_scoreboard_by_id(id):
+    scoreboard = ScoreBoard.query.get(id)
+    name = request.json['name']
+
+    scoreboard.name = name
+
+    db.session.commit()
+    return scoreboard_schema.dump(scoreboard)
