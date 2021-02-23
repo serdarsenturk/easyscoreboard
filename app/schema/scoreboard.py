@@ -5,5 +5,5 @@ class ScoreBoardSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = ScoreBoard
 
-score_board_schema = ScoreBoardSchema()
-score_boards_schema = ScoreBoardSchema(many=True)
+scoreboard_schema = ScoreBoardSchema()
+scoreboards_schema = ScoreBoardSchema(many=True)
