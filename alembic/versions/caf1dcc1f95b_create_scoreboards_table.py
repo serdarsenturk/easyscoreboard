@@ -21,7 +21,6 @@ def upgrade():
         'score_boards',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('name', sa.String(25), nullable=False),
-        sa.Column('participant', sa.Integer())
     )
 
 
