@@ -59,3 +59,5 @@ def remove_participants_by_id(prt_id):
     db.session.commit()
 
     return jsonify(participant_schema.dump(participant))
+
+@scoreboard.route('participants/<prt_id>', methods=["PUT"])
