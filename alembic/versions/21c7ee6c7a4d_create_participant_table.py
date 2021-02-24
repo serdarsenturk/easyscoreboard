@@ -21,6 +21,7 @@ def upgrade():
         'participant',
         sa.Column('prt_id', sa.Integer(), primary_key=True),
         sa.Column('name', sa.VARCHAR(25), nullable=False),
+        sa.Column('board_id', sa.Integer(), nullable=False)
     )
 
 
