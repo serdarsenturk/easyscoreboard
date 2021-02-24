@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app import db
 from app.models.scoreboard import ScoreBoard, Participant
-from app.schema.scoreboard import scoreboards_schema, scoreboard_schema, participant_schema
+from app.schema.scoreboard import scoreboards_schema, scoreboard_schema, participant_schema, participants_schema
 
 scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/scoreboards')
 
@@ -48,3 +48,6 @@ def create_participants():
     return participant_schema.dump(participant)
 
 @scoreboard.route('/participants', methods=["GET"])
+def list_participants():
+    participants = Participant.query.all()
+    return jsonify(participants_schema.dump(participants))
