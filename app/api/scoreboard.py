@@ -46,3 +46,5 @@ def create_participants():
     db.session.add(participant)
     db.session.commit()
     return participant_schema.dump(participant)
+
+@scoreboard.route('/participants', methods=["GET"])
