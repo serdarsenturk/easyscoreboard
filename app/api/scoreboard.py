@@ -61,3 +61,13 @@ def remove_participants_by_id(prt_id):
     return jsonify(participant_schema.dump(participant))
 
 @scoreboard.route('participants/<prt_id>', methods=["PUT"])
+def modify_participants_by_id(prt_id):
+    participant = Participant.query.get(prt_id)
+    name = request.json['name']
+
+    participant.name = name
+
+    db.session.commit()
+
+    return jsonify(participant_schema.dump(participant))
+
