@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app import db
-from app.models.scoreboard import ScoreBoard
-from app.schema.scoreboard import scoreboards_schema, scoreboard_schema
+from app.models.scoreboard import ScoreBoard, Participant
+from app.schema.scoreboard import scoreboards_schema, scoreboard_schema, participant_schema
 
 scoreboard = Blueprint('scoreboard', __name__, url_prefix='/api/v1/scoreboards')
 
@@ -37,3 +37,12 @@ def modify_scoreboard_by_id(id):
 
 
 @scoreboard.route('/participants', methods=["POST"])
+def create_participants():
+    name = request.json['name']
+    board_id = request.json['board_id']
+
+    participant = Participant(name=name, board_id=board_id)
+
+    db.session.add(participant)
+    db.session.commit()
+    return participant_schema.dump(participant)
