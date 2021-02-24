@@ -34,3 +34,6 @@ def modify_scoreboard_by_id(id):
 
     db.session.commit()
     return scoreboard_schema.dump(scoreboard)
+
+
+@scoreboard.route('/participants', methods=["POST"])
