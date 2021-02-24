@@ -51,4 +51,11 @@ def create_participants():
 def list_participants():
     participants = Participant.query.all()
     return jsonify(participants_schema.dump(participants))
+
 @scoreboard.route('/participants/<prt_id>', methods=["DELETE"])
+def remove_participants_by_id(prt_id):
+    participant = Participant.query.get(prt_id)
+    db.session.delete(participant)
+    db.session.commit()
+
+    return jsonify(participant_schema.dump(participant))
