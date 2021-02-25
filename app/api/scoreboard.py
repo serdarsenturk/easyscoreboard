@@ -75,3 +75,11 @@ def modify_participants_by_id(id):
     return jsonify(participant_schema.dump(participant))
 
 @scoreboard.route('/addscore/<id>/<int:increment>', methods=["POST"])
+def add_score_by_id(id, increment):
+    participant = Participant.query.get(id)
+
+    participant.score += increment  # Increment to score by `increment` variable where come from function parameter
+
+    db.session.commit()
+
+    return jsonify(participant_schema.dump(participant))
