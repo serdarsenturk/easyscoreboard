@@ -18,7 +18,7 @@ depends_on = None
 
 def upgrade():
     op.create_table(
-        'participant',
+        'participants',
         sa.Column('id', sa.Integer(), primary_key=True),
         sa.Column('name', sa.VARCHAR(25), nullable=False),
         sa.Column('board_id', sa.Integer(), nullable=False),
@@ -27,4 +27,4 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_table('participant')
+    op.drop_table('participants')
