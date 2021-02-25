@@ -13,11 +13,15 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 # Import a module / component using its blueprint handler variable (ex./url)
-from app.api.scoreboard import scoreboard as api
+from app.api.scoreboard import scoreboard as board_api
+from app.api.participant import participants as participants_api
+from app.api.score import scores as scores_api
 from app.api.home import home
 
 #Register blueprint(s)
-app.register_blueprint(api)
+app.register_blueprint(board_api)
+app.register_blueprint(participants_api)
+app.register_blueprint(scores_api)
 app.register_blueprint(home)
 
 # Build the database:
