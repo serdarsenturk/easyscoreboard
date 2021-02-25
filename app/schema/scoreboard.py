@@ -7,4 +7,3 @@ class ScoreBoardSchema(ma.SQLAlchemyAutoSchema):
 
 scoreboard_schema = ScoreBoardSchema()
 scoreboards_schema = ScoreBoardSchema(many=True)
-

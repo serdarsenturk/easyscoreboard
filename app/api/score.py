@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify
-
 from app import db
 from app.models.participant import Participant
 from app.schema.participant import participant_schema
