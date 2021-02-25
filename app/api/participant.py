@@ -29,8 +29,12 @@ def list_participants(board_id):
     return jsonify(participants_schema.dump(participants))
 
 @participants.route('/<id>', methods=["DELETE"])
-def remove_participants_by_id(id):
-    participant = Participant.query.get(id)
+def remove_participants_by_id(id, board_id):
+    participant = Participant.query.join(ScoreBoard)\
+        .filter(ScoreBoard.id == board_id)\
+        .filter(Participant.id == id)\
+        .first()
+
     db.session.delete(participant)
     db.session.commit()
 
