@@ -1,17 +1,10 @@
 from app import ma
-from app.models.scoreboard import ScoreBoard, Participant
-
+from app.models.scoreboard import ScoreBoard
 
 class ScoreBoardSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = ScoreBoard
 
-class ParticipantSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Participant
-
 scoreboard_schema = ScoreBoardSchema()
 scoreboards_schema = ScoreBoardSchema(many=True)
 
-participant_schema = ParticipantSchema()
-participants_schema = ParticipantSchema(many=True)
