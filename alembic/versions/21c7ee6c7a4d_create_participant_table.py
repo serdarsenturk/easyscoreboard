@@ -19,7 +19,7 @@ depends_on = None
 def upgrade():
     op.create_table(
         'participant',
-        sa.Column('prt_id', sa.Integer(), primary_key=True),
+        sa.Column('id', sa.Integer(), primary_key=True),
         sa.Column('name', sa.VARCHAR(25), nullable=False),
         sa.Column('board_id', sa.Integer(), nullable=False)
     )
