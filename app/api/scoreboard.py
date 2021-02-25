@@ -47,22 +47,23 @@ def create_participants():
     db.session.commit()
     return participant_schema.dump(participant)
 
-@scoreboard.route('/participants', methods=["GET"])
-def list_participants():
-    participants = Participant.query.all()
+@scoreboard.route('/participants/<board_id>', methods=["GET"])
+def list_participants(board_id):
+    participants = db.session.query(Participant.name).join(ScoreBoard).filter(ScoreBoard.id == board_id)
+
     return jsonify(participants_schema.dump(participants))
 
-@scoreboard.route('/participants/<prt_id>', methods=["DELETE"])
-def remove_participants_by_id(prt_id):
-    participant = Participant.query.get(prt_id)
+@scoreboard.route('/participants/<id>', methods=["DELETE"])
+def remove_participants_by_id(id):
+    participant = Participant.query.get(id)
     db.session.delete(participant)
     db.session.commit()
 
     return jsonify(participant_schema.dump(participant))
 
-@scoreboard.route('participants/<prt_id>', methods=["PUT"])
-def modify_participants_by_id(prt_id):
-    participant = Participant.query.get(prt_id)
+@scoreboard.route('participants/<id>', methods=["PUT"])
+def modify_participants_by_id(id):
+    participant = Participant.query.get(id)
     name = request.json['name']
 
     participant.name = name
