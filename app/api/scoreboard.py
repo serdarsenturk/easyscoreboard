@@ -74,3 +74,4 @@ def modify_participants_by_id(id):
 
     return jsonify(participant_schema.dump(participant))
 
+@scoreboard.route('/addscore/<id>/<int:increment>', methods=["POST"])
