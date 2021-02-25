@@ -51,7 +51,7 @@ def create_participants():
 
 @scoreboard.route('/participants/<board_id>', methods=["GET"])
 def list_participants(board_id):
-    participants = db.session.query(Participant.name).join(ScoreBoard).filter(ScoreBoard.id == board_id)
+    participants = db.session.query(Participant.name, Participant.score).join(ScoreBoard).filter(ScoreBoard.id == board_id)
 
     return jsonify(participants_schema.dump(participants))
 
