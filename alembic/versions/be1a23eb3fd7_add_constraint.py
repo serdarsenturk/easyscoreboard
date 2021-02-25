@@ -19,8 +19,8 @@ depends_on = None
 
 def upgrade():
     op.create_foreign_key(
-        "fk_board_id",
-        "participant",
+        "fk_participants_boards_id",
+        "participants",
         "score_boards",
         ["board_id"],
         ["id"]
@@ -28,4 +28,4 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_constraint("fk_board_id", 'participant', type_='foreignkey')
+    op.drop_constraint("fk_participants_boards_id", 'participants', type_='foreignkey')
