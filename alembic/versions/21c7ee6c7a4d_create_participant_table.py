@@ -21,7 +21,8 @@ def upgrade():
         'participant',
         sa.Column('id', sa.Integer(), primary_key=True),
         sa.Column('name', sa.VARCHAR(25), nullable=False),
-        sa.Column('board_id', sa.Integer(), nullable=False)
+        sa.Column('board_id', sa.Integer(), nullable=False),
+        sa.Column('score', sa.Integer(), server_default='0')
     )
 
 
