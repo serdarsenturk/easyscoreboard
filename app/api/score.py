@@ -8,7 +8,7 @@ scores = Blueprint('scores', __name__, url_prefix='/api/v1/scoreboards/<board_id
 
 @scores.route('', methods=["PUT"])
 def add_score_by_id(id, board_id):
-    participant = Participant.query.join(ScoreBoard)\
+    participant = db.session.query(Participant)\
         .filter(ScoreBoard.id == board_id)\
         .filter(Participant.id == id)\
         .first()
