@@ -17,8 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.create_unique_constraint('unq_name', 'participants', ["name", "board_id"])
+    op.create_unique_constraint('unq_board_id_name', 'participants', ["name", "board_id"])
 
 
 def downgrade():
-    op.drop_constraint('unq_name', 'participants')
+    op.drop_constraint('unq_board_id_name', 'participants')
