@@ -8,7 +8,7 @@ ma = Marshmallow(app)
 
 # Configurations
 app.config.from_object('config')
-
+app.config["SQLALCHEMY_ECHO"] = True
 #Define the database object which is imported
 db = SQLAlchemy(app)
 
