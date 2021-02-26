@@ -16,7 +16,6 @@ branch_labels = None
 depends_on = None
 
 
-
 def upgrade():
     op.create_foreign_key(
         "fk_participants_boards_id",
