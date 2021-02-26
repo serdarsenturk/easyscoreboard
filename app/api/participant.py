@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app import db
 from app.models.participant import Participant
-from app.models.scoreboard import ScoreBoard
 from app.schema.participant import participant_schema, participants_schema
 
 participants = Blueprint('participants', __name__, url_prefix='/api/v1/scoreboards/<board_id>/participants')
