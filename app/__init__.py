@@ -13,7 +13,7 @@ app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
 # Import a module / component using its blueprint handler variable (ex./url)
-from app.api.scoreboard import scoreboard as board_api
+from app.api.board import boards as board_api
 from app.api.participant import participants as participants_api
 from app.api.score import scores as scores_api
 from app.api.home import home
