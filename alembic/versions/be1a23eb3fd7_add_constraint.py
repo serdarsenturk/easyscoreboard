@@ -20,7 +20,7 @@ def upgrade():
     op.create_foreign_key(
         "fk_participants_boards_id",
         "participants",
-        "score_boards",
+        "boards",
         ["board_id"],
         ["id"]
     )
