@@ -3,7 +3,7 @@ from app import db
 from app.models.participant import Participant
 from app.schema.participant import participant_schema
 
-scores = Blueprint('scores', __name__, url_prefix='/api/v1/scoreboards/<board_id>/participants/<id>/score')
+scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/participants/<id>/score')
 
 @scores.route('', methods=["PUT"])
 def add_score_by_id(id, board_id):
