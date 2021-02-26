@@ -18,8 +18,7 @@ def create_participants(board_id):
 
 @participants.route('', methods=["GET"])
 def list_participants(board_id):
-    participants = db.session.query(Participant.name, Participant.score)\
-        .join(ScoreBoard)\
+    participants = db.session.query(Participant.id, Participant.score)\
         .filter(ScoreBoard.id == board_id)\
         .all()
 
@@ -27,7 +26,7 @@ def list_participants(board_id):
 
 @participants.route('/<id>', methods=["DELETE"])
 def remove_participants_by_id(id, board_id):
-    participant = Participant.query.join(ScoreBoard)\
+    participant = db.session.query(Participant)\
         .filter(ScoreBoard.id == board_id)\
         .filter(Participant.id == id)\
         .first()
@@ -39,13 +38,12 @@ def remove_participants_by_id(id, board_id):
 
 @participants.route('/<id>/name', methods=["PUT"])
 def modify_participants_by_id(id, board_id):
-    participant = Participant.query.join(ScoreBoard)\
+    participant = db.session.query(Participant)\
         .filter(ScoreBoard.id == board_id)\
         .filter(Participant.id == id)\
         .first()
 
     name = request.json['name']
-
     participant.name = name
 
     db.session.commit()
