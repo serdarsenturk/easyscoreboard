@@ -18,7 +18,10 @@ def create_participants(board_id):
 
 @participants.route('', methods=["GET"])
 def list_participants(board_id):
-    participants = db.session.query(Participant.name, Participant.score).join(ScoreBoard).filter(ScoreBoard.id == board_id).all()
+    participants = db.session.query(Participant.name, Participant.score)\
+        .join(ScoreBoard)\
+        .filter(ScoreBoard.id == board_id)\
+        .all()
 
     return jsonify(participants_schema.dump(participants))
 
