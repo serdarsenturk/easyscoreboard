@@ -3,9 +3,9 @@ from app import db
 from app.models.participant import Participant
 from app.schema.participant import participant_schema
 
-scores = Blueprint('scores', __name__, url_prefix='/api/v1/scoreboards/addscore')
+scores = Blueprint('scores', __name__, url_prefix='/api/v1/scoreboards/<board_id>/participants/<id>/score')
 
-@scores.route('/<id>/<int:increment>', methods=["POST"])
+@scores.route('/<int:increment>', methods=["PUT"])
 def add_score_by_id(id, increment):
     participant = Participant.query.get(id)
 
