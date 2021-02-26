@@ -34,11 +34,14 @@ def remove_participants_by_id(id, board_id):
 
     return jsonify(participant_schema.dump(participant))
 
-def modify_participants_by_id(id, board_id, name):
+@participants.route('/<id>/name', methods=["PUT"])
+def modify_participants_by_id(id, board_id):
     participant = Participant.query.join(ScoreBoard)\
         .filter(ScoreBoard.id == board_id)\
         .filter(Participant.id == id)\
         .first()
+
+    name = request.json['name']
 
     participant.name = name
 
