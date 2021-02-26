@@ -3,7 +3,7 @@ from app import db
 from app.models.participant import Participant
 from app.schema.participant import participant_schema, participants_schema
 
-participants = Blueprint('participants', __name__, url_prefix='/api/v1/scoreboards/<board_id>/participants')
+participants = Blueprint('participants', __name__, url_prefix='/api/v1/boards/<board_id>/participants')
 
 @participants.route('', methods=["POST"])
 def create_participants(board_id):
