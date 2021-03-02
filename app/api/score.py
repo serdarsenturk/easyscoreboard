@@ -1,9 +1,12 @@
 from flask import Blueprint, jsonify, request
+from flask_cors import CORS
+
 from app import db
 from app.models.participant import Participant
 from app.schema.participant import participant_schema
 
 scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/participants/<id>/score')
+CORS(scores)
 
 @scores.route('', methods=["PUT"])
 def add_score_by_id(id, board_id):
