@@ -1,11 +1,17 @@
 version: '3.8'
 
-services: 
+services:
   api:
     build: .
-    ports: 
+    ports:
       - 5000:5000
     restart: always
+    container_name: "backend"
+    env_file:
+      - .env
+    volumes: [ '.:/app' ]
+    depends_on:
+      - database
   
   database:
       environment: 
@@ -18,3 +24,11 @@ services:
         - 5432:5432
       volumes: 
         - ~/dockerdata/postgresql:/var/lib/postgresql/data
+
+  server-side:
+    image: easyscoreboard-frontend:1.2
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api:/usr/src/app/frontend
+      - /usr/src/app/api/node_modules
