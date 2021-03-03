@@ -1,16 +1,18 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
+from config import Config
 
 #Define the WSGI application object
 app = Flask(__name__)
 ma = Marshmallow(app)
 
 # Configurations
-app.config.from_object('config')
-app.config["SQLALCHEMY_ECHO"] = True
+app.config.from_object(Config)
 #Define the database object which is imported
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Import a module / component using its blueprint handler variable (ex./url)
 from app.api.board import boards as board_api

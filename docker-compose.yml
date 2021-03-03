@@ -1,12 +1,18 @@
 version: '3.8'
 
-services: 
+services:
   api:
     build: .
-    ports: 
+    ports:
       - 5000:5000
     restart: always
-  
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - database
+
   database:
       environment: 
         POSTGRES_USER: ${POSTGRES_USER}
@@ -18,3 +24,13 @@ services:
         - 5432:5432
       volumes: 
         - ~/dockerdata/postgresql:/var/lib/postgresql/data
+#
+#  frontend:
+#    ports:
+#      - 3000:3000
+#    build:
+#      context: ../easyscoreboard-frontend
+#    volumes:
+#      - ../easyscoreboard-frontend:/usr/src/app
+#      - /usr/src/app/node_modules
+#      - /usr/src/app/.next
