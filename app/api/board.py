@@ -1,14 +1,13 @@
 from flask import Blueprint, jsonify, request
 from app import db
 from app.models.board import Board
-from app.models.participant import Participant
 from app.schema.board import boards_schema, board_schema
 
 boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
 
 @boards.route('<id>', methods=["GET"])
 def get_board_by_id(id):
-    board = db.session.query(Board.id == id).join(Participant).filter(Participant.board_id == id)
+    board = Board.query.get(id)
     return jsonify(board_schema.dump(board))
 
 @boards.route('/', methods=["GET"])
