@@ -1,10 +1,13 @@
+from marshmallow import fields
+
 from app import ma
-from app.models.board import Board
+from app.schema.participant import ParticipantSchema
+
 
 class BoardSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Board
-        include_fk = True
+    id = fields.Int(dump_only=True)
+    name = fields.Str()
+    participants = fields.Nested(ParticipantSchema, many=True)
 
 board_schema = BoardSchema()
 boards_schema = BoardSchema(many=True)
