@@ -17,7 +17,7 @@ def create_participants(board_id):
 
 @participants.route('', methods=["GET"])
 def list_participants(board_id):
-    participants = db.session.query(Participant.id, Participant.score)\
+    participants = db.session.query(Participant)\
         .filter(Participant.board_id == board_id)\
         .all()
 
