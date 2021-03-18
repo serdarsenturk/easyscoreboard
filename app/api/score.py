@@ -8,6 +8,14 @@ from app.schema.participant import participant_schema
 scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/participants/<id>/score')
 CORS(scores)
 
+pusher = Pusher(
+    app_id='1173498',
+    key='4d834764c992c4d8e8d0',
+    secret='73f383f850642ccd16ae',
+    cluster='eu',
+    ssl=True
+)
+
 @scores.route('', methods=["PUT"])
 @cross_origin(supports_credentials=True)
 def add_score_by_id(id, board_id):
