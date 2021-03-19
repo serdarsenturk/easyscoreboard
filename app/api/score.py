@@ -9,10 +9,10 @@ scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/par
 CORS(scores)
 
 pusher = Pusher(
-    app_id='1173498',
-    key='4d834764c992c4d8e8d0',
-    secret='73f383f850642ccd16ae',
-    cluster='eu',
+    app_id='app_id',
+    key='app_key',
+    secret='secret_key',
+    cluster='cluster',
     ssl=True
 )
 
