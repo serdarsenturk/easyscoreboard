@@ -1,3 +1,5 @@
+import os
+
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS, cross_origin
 from pusher import Pusher
@@ -9,10 +11,10 @@ scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/par
 CORS(scores)
 
 pusher = Pusher(
-    app_id='app_id',
-    key='app_key',
-    secret='secret_key',
-    cluster='cluster',
+    app_id=os.environ.get('PUSHER_APP_ID'),
+    key=os.environ.get('PUSHER_KEY'),
+    secret=os.environ.get('PUSHER_SECRET'),
+    cluster=os.environ.get('PUSHER_CLUSTER'),
     ssl=True
 )
 
