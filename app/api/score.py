@@ -10,7 +10,7 @@ pusher = Pusher(
     app_id=app.config.get('PUSHER_APP_ID'),
     key=app.config.get('PUSHER_KEY'),
     secret=app.config.get('PUSHER_SECRET'),
-    cluster=app.config.get('PUSHER_CLUSTER'),
+    cluster='eu',
     ssl=True
 )
 
