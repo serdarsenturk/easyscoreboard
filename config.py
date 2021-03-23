@@ -7,4 +7,3 @@ class Config:
     PUSHER_APP_ID = os.environ['PUSHER_APP_ID']
     PUSHER_KEY = os.environ['PUSHER_KEY']
     PUSHER_SECRET = os.environ['PUSHER_SECRET']
-    PUSHER_CLUSTER = os.environ['PUSHER_CLUSTER']
