@@ -1,17 +1,16 @@
-import os
 from flask import Blueprint, jsonify, request
 from pusher import Pusher
-from app import db
+from app import db, app
 from app.models.participant import Participant
 from app.schema.participant import participant_schema
 
 scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/participants/<id>/score')
 
 pusher = Pusher(
-    app_id=os.environ.get('PUSHER_APP_ID'),
-    key=os.environ.get('PUSHER_KEY'),
-    secret=os.environ.get('PUSHER_SECRET'),
-    cluster=os.environ.get('PUSHER_CLUSTER'),
+    app_id=app.config.get('PUSHER_APP_ID'),
+    key=app.config.get('PUSHER_KEY'),
+    secret=app.config.get('PUSHER_SECRET'),
+    cluster=app.config.get('PUSHER_CLUSTER'),
     ssl=True
 )
 
