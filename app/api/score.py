@@ -3,6 +3,7 @@ from pusher import Pusher
 from app import db, app
 from app.models.participant import Participant
 from app.schema.participant import participant_schema
+from flask_cors import CORS
 
 scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/participants/<id>/score')
 
