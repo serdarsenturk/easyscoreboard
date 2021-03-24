@@ -24,7 +24,8 @@ def add_score_by_id(id, board_id):
         .first()
 
     increment = request.json['increment']
-    participant.score += increment  # Increment to score by `increment` variable where come from function parameter
+
+    participant.score += increment
 
     db.session.commit()
     pusher.trigger(f"participant-{participant.id}", 'score-updated', participant.score)
