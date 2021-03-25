@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, request
-from app import db
+from app import db, app
 from app.models.board import Board
 from app.schema.board import boards_schema, board_schema
+from flask_cors import CORS
 
 boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
+CORS(boards, resources={r"/api/*": {"origins": app.config.get('ORIGINS')}})
 
 @boards.route('<id>', methods=["GET"])
 def get_board_by_id(id):
