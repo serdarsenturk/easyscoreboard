@@ -3,10 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from config import Config
+from flask_wtf.csrf import CSRFProtect
 
 #Define the WSGI application object
 app = Flask(__name__)
 ma = Marshmallow(app)
+csrf = CSRFProtect(app)
 
 # Configurations
 app.config.from_object(Config)
