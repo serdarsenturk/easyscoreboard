@@ -9,3 +9,9 @@ CORS(home, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}}, s
 @home.route('/')
 def homeView():
     return "<h1>Welcome to Easy Score Board.</h1>"
+
+@home.route('/api/v1/aft')
+def AFT():
+    token = generate_csrf('serdarsenturk')
+
+    return jsonify({"X-CSRFToken": token})
