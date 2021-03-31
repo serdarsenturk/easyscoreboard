@@ -6,7 +6,7 @@ from app.schema.participant import participant_schema
 from flask_cors import CORS
 
 scores = Blueprint('scores', __name__, url_prefix='/api/v1/boards/<board_id>/participants/<id>/score')
-CORS(scores, resources={r"/api/*": {"origins": app.config.get('ORIGINS')}})
+CORS(scores, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
 
 pusher = Pusher(
     app_id=app.config.get('PUSHER_APP_ID'),
