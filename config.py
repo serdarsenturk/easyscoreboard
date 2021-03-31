@@ -8,3 +8,5 @@ class Config:
     PUSHER_KEY = os.environ['PUSHER_KEY']
     PUSHER_SECRET = os.environ['PUSHER_SECRET']
     CORS_ORIGINS = os.environ['CORS_ORIGINS']
+    WTF_CSRF_SECRET_KEY = 'serdarsenturk'
+    SECRET_KEY = 'serdarsenturk'
