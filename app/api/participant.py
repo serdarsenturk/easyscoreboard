@@ -81,5 +81,6 @@ def modify_participants_by_id(code, board_code):
             return jsonify(participant_schema.dump(participant))
         else:
             raise Exception('404')
+    except ValueError:
         return ValueError
 
