@@ -3,6 +3,7 @@ from app import db, app
 from app.models.board import Board
 from app.schema.board import boards_schema, board_schema
 from flask_cors import CORS
+import base62
 
 boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
 CORS(boards, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
