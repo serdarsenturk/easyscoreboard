@@ -7,9 +7,11 @@ from flask_cors import CORS
 boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
 CORS(boards, resources={r"/api/*": {"origins": app.config.get('ORIGINS')}})
 
-@boards.route('<id>', methods=["GET"])
-def get_board_by_id(id):
-    board = Board.query.get(id)
+@boards.route('<code>', methods=["GET"])
+def get_board_by_id(code):
+    board = db.session.query(Board) \
+        .filter(Board.code == code) \
+        .first()
     return jsonify(board_schema.dump(board))
 
 @boards.route('/', methods=["GET"])
