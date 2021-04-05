@@ -10,14 +10,25 @@ participants = Blueprint('participants', __name__, url_prefix='/api/v1/boards/<b
 CORS(participants, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
 
 @participants.route('', methods=["POST"])
-def create_participants(board_id):
-    name = request.json['name']
+def create_participants(board_code):
 
-    participant = Participant(name=name, board_id=board_id)
+    try:
+        is_valid = db.session.query(Board)\
+        .filter(Board.code == board_code)\
+        .first()
 
-    db.session.add(participant)
-    db.session.commit()
-    return participant_schema.dump(participant)
+        if is_valid:
+            name = request.json['name']
+            participant = Participant(name=name, board_id=is_valid.id)
+            participant.code = base62.encode(1111111)
+
+            db.session.add(participant)
+            db.session.commit()
+            return participant_schema.dump(participant)
+        else:
+            raise Exception('404')
+    except ValueError:
+        return ValueError
 
 @participants.route('', methods=["GET"])
 def list_participants(board_id):
