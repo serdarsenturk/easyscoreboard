@@ -18,16 +18,22 @@ pusher = Pusher(
 )
 
 @scores.route('', methods=["PUT"])
-def add_score_by_id(id, board_id):
-    participant = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
-        .filter(Participant.id == id)\
+def add_score_by_id(participant_code, board_code):
+    is_valid = db.session.query(Board) \
+        .filter(Board.code == board_code) \
         .first()
 
-    increment = request.json['increment']
+    if is_valid:
+        increment = request.json['increment']
 
-    participant.score += increment
+        participant = db.session.query(Participant) \
+            .filter(Participant.board_id == is_valid.id) \
+            .filter(Participant.code == participant_code) \
+            .first()
+        participant.score += increment
 
-    db.session.commit()
-    pusher.trigger(f"participant-{participant.id}", 'score-updated', participant.score)
-    return jsonify(participant_schema.dump(participant))
+        db.session.commit()
+        pusher.trigger(f"participant-{participant.code}", 'score-updated', participant.score)
+        return jsonify(participant_schema.dump(participant))
+    else:
+        raise Exception('404')
