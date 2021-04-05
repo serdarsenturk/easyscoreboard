@@ -31,9 +31,9 @@ def create_participants(board_code):
         return ValueError
 
 @participants.route('', methods=["GET"])
-def list_participants(board_id):
+def list_participants(board_code):
     participants = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
+        .filter(Participant.code == board_code)\
         .all()
 
     return jsonify(participants_schema.dump(participants))
