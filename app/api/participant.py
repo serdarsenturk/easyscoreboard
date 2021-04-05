@@ -60,11 +60,26 @@ def remove_participants_by_id(code, board_code):
     except ValueError:
         return ValueError
 
+@participants.route('/<code>/name', methods=["PUT"])
+def modify_participants_by_id(code, board_code):
+    try:
+        is_valid = db.session.query(Board)\
+        .filter(Board.code == board_code)\
         .first()
 
-    name = request.json['name']
-    participant.name = name
+        if is_valid:
+            participant = db.session.query(Participant) \
+                .filter(Participant.board_id == is_valid.id) \
+                .filter(Participant.code == code) \
+                .first()
 
-    db.session.commit()
+            name = request.json['name']
+            participant.name = name
 
-    return jsonify(participant_schema.dump(participant))
+            db.session.commit()
+
+            return jsonify(participant_schema.dump(participant))
+        else:
+            raise Exception('404')
+        return ValueError
+
