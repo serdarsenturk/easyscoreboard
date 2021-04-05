@@ -22,6 +22,7 @@ def create_board():
     name = request.json['name']
 
     new_board = Board(name=name)
+    new_board.code = base62.encode(555123)
 
     db.session.add(new_board)
     db.session.commit()
