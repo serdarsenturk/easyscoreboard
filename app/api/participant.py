@@ -38,23 +38,28 @@ def list_participants(board_code):
 
     return jsonify(participants_schema.dump(participants))
 
-@participants.route('/<id>', methods=["DELETE"])
-def remove_participants_by_id(id, board_id):
-    participant = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
-        .filter(Participant.id == id)\
+@participants.route('/<code>', methods=["DELETE"])
+def remove_participants_by_id(code, board_code):
+    try:
+        is_valid = db.session.query(Board)\
+        .filter(Board.code == board_code)\
         .first()
 
-    db.session.delete(participant)
-    db.session.commit()
+        if is_valid:
+            participant = db.session.query(Participant) \
+                .filter(Participant.board_id == is_valid.id) \
+                .filter(Participant.code == code) \
+                .first()
 
-    return ('', 204)
+            db.session.delete(participant)
+            db.session.commit()
 
-@participants.route('/<id>/name', methods=["PUT"])
-def modify_participants_by_id(id, board_id):
-    participant = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
-        .filter(Participant.id == id)\
+            return ('', 204)
+        else:
+            raise Exception('404')
+    except ValueError:
+        return ValueError
+
         .first()
 
     name = request.json['name']
