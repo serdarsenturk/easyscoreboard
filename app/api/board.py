@@ -27,9 +27,11 @@ def create_board():
     db.session.commit()
     return board_schema.dump(new_board)
 
-@boards.route('/<id>/name', methods=["PUT"])
-def modify_board_by_id(id):
-    board = Board.query.get(id)
+@boards.route('/<code>/name', methods=["PUT"])
+def modify_board_by_id(code):
+    board = db.session.query(Board)\
+        .filter(Board.code == code)\
+        .first()
     name = request.json['name']
 
     board.name = name
