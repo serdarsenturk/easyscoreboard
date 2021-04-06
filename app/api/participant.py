@@ -21,6 +21,9 @@ def create_participants(board_code):
         raise NotFound()
 
     name = request.json['name']
+    participant = Participant(name=name, board_id=board.id)
+    participant.code = base62.encode(hash(('participants', participant.id)), 8)[-8:]
+
     db.session.add(participant)
     db.session.commit()
 
