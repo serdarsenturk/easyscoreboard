@@ -32,11 +32,18 @@ def create_participants(board_code):
 
 @participants.route('', methods=["GET"])
 def list_participants(board_code):
-    participants = db.session.query(Participant)\
-        .filter(Participant.code == board_code)\
+    board = db.session.query(Board) \
+        .filter(Board.code == board_code) \
+        .first()
+
+    if board is None:
+        raise NotFound()
+
+    participant_list = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
         .all()
 
-    return jsonify(participants_schema.dump(participants))
+    return jsonify(participants_schema.dump(participant_list))
 
 @participants.route('/<code>', methods=["DELETE"])
 def remove_participants_by_id(code, board_code):
