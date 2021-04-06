@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from sqlalchemy import Sequence
 from app import db, app
 from app.models.board import Board
 from app.models.participant import Participant
