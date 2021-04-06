@@ -54,12 +54,15 @@ def remove_participants_by_code(code, board_code):
     if board is None:
         raise NotFound()
 
-            db.session.delete(participant)
-            db.session.commit()
+    participant = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
+        .filter(Participant.code == code) \
+        .first()
 
-            return ('', 204)
-        else:
-            raise Exception('404')
+    db.session.delete(participant)
+    db.session.commit()
+
+    return '', 204
 
 @participants.route('/<code>/name', methods=["PUT"])
 def modify_participants_by_id(code, board_code):
