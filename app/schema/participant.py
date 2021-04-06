@@ -1,9 +1,10 @@
+from marshmallow import fields
 from app import ma
-from app.models.participant import Participant
 
 class ParticipantSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Participant
+    code = fields.Str()
+    name = fields.Str()
+    score = fields.Int()
 
 participant_schema = ParticipantSchema()
 participants_schema = ParticipantSchema(many=True)

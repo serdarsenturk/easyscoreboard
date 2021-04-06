@@ -1,47 +1,81 @@
 from flask import Blueprint, request, jsonify
+from sqlalchemy import Sequence
+from werkzeug.exceptions import NotFound
 from app import db, app
+from app.models.board import Board
 from app.models.participant import Participant
 from app.schema.participant import participant_schema, participants_schema
 from flask_cors import CORS
+import base62
 
-participants = Blueprint('participants', __name__, url_prefix='/api/v1/boards/<board_id>/participants')
-CORS(participants, resources={r"/api/*": {"origins": app.config.get('ORIGINS')}})
+participants = Blueprint('participants', __name__, url_prefix='/api/v1/boards/<board_code>/participants')
+CORS(participants, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
 
 @participants.route('', methods=["POST"])
-def create_participants(board_id):
-    name = request.json['name']
+def create_participants(board_code):
+    board = db.session.query(Board)\
+        .filter(Board.code == board_code)\
+        .first()
 
-    participant = Participant(name=name, board_id=board_id)
+    if board is None:
+        raise NotFound()
+
+    name = request.json['name']
+    participant = Participant(name=name, board_id=board.id)
+    participant.id = db.session.execute(Sequence("participants_id_seq"))
+    participant.code = base62.encode(hash(('participants', participant.id)), 8)[-8:]
 
     db.session.add(participant)
     db.session.commit()
+
     return participant_schema.dump(participant)
 
 @participants.route('', methods=["GET"])
-def list_participants(board_id):
-    participants = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
+def list_participants(board_code):
+    board = db.session.query(Board) \
+        .filter(Board.code == board_code) \
+        .first()
+
+    if board is None:
+        raise NotFound()
+
+    participant_list = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
         .all()
 
-    return jsonify(participants_schema.dump(participants))
+    return jsonify(participants_schema.dump(participant_list))
 
-@participants.route('/<id>', methods=["DELETE"])
-def remove_participants_by_id(id, board_id):
-    participant = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
-        .filter(Participant.id == id)\
+@participants.route('/<code>', methods=["DELETE"])
+def remove_participants_by_code(code, board_code):
+    board = db.session.query(Board)\
+    .filter(Board.code == board_code)\
+    .first()
+
+    if board is None:
+        raise NotFound()
+
+    participant = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
+        .filter(Participant.code == code) \
         .first()
 
     db.session.delete(participant)
     db.session.commit()
 
-    return ('', 204)
+    return '', 204
 
-@participants.route('/<id>/name', methods=["PUT"])
-def modify_participants_by_id(id, board_id):
-    participant = db.session.query(Participant)\
-        .filter(Participant.board_id == board_id)\
-        .filter(Participant.id == id)\
+@participants.route('/<code>/name', methods=["PUT"])
+def modify_participants_by_code(code, board_code):
+    board = db.session.query(Board)\
+    .filter(Board.code == board_code)\
+    .first()
+
+    if board is None:
+        raise NotFound()
+
+    participant = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
+        .filter(Participant.code == code) \
         .first()
 
     name = request.json['name']
@@ -50,3 +84,4 @@ def modify_participants_by_id(id, board_id):
     db.session.commit()
 
     return jsonify(participant_schema.dump(participant))
+
