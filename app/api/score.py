@@ -24,17 +24,16 @@ def add_score_by_code(participant_code, board_code):
         .filter(Board.code == board_code) \
         .first()
 
-    if is_valid:
-        increment = request.json['increment']
+    if board is None:
+        raise NotFound()
 
-        participant = db.session.query(Participant) \
-            .filter(Participant.board_id == is_valid.id) \
-            .filter(Participant.code == participant_code) \
-            .first()
-        participant.score += increment
+    increment = request.json['increment']
 
-        db.session.commit()
-        pusher.trigger(f"participant-{participant.code}", 'score-updated', participant.score)
-        return jsonify(participant_schema.dump(participant))
-    else:
-        raise Exception('404')
+    participant = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
+        .filter(Participant.code == participant_code) \
+        .first()
+    participant.score += increment
+
+    db.session.commit()
+    return jsonify(participant_schema.dump(participant))
