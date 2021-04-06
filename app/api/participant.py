@@ -70,6 +70,8 @@ def modify_participants_by_code(code, board_code):
     .filter(Board.code == board_code)\
     .first()
 
+    if board is None:
+        raise NotFound()
 
         if is_valid:
             participant = db.session.query(Participant) \
