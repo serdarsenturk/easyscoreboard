@@ -13,20 +13,18 @@ CORS(participants, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGIN
 
 @participants.route('', methods=["POST"])
 def create_participants(board_code):
-        is_valid = db.session.query(Board)\
+    board = db.session.query(Board)\
         .filter(Board.code == board_code)\
         .first()
 
-        if is_valid:
-            name = request.json['name']
-            participant = Participant(name=name, board_id=is_valid.id)
-            participant.code = base62.encode(1111111)
+    if board is None:
+        raise NotFound()
 
-            db.session.add(participant)
-            db.session.commit()
-            return participant_schema.dump(participant)
-        else:
-            raise Exception('404')
+    name = request.json['name']
+    db.session.add(participant)
+    db.session.commit()
+
+    return participant_schema.dump(participant)
 
 @participants.route('', methods=["GET"])
 def list_participants(board_code):
