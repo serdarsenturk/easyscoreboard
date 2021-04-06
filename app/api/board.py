@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request
+from sqlalchemy import Sequence
+from werkzeug.exceptions import NotFound
 from app import db, app
 from app.models.board import Board
 from flask_cors import CORS
