@@ -73,18 +73,15 @@ def modify_participants_by_code(code, board_code):
     if board is None:
         raise NotFound()
 
-        if is_valid:
-            participant = db.session.query(Participant) \
-                .filter(Participant.board_id == is_valid.id) \
-                .filter(Participant.code == code) \
-                .first()
+    participant = db.session.query(Participant) \
+        .filter(Participant.board_id == board.id) \
+        .filter(Participant.code == code) \
+        .first()
 
-            name = request.json['name']
-            participant.name = name
+    name = request.json['name']
+    participant.name = name
 
-            db.session.commit()
+    db.session.commit()
 
-            return jsonify(participant_schema.dump(participant))
-        else:
-            raise Exception('404')
+    return jsonify(participant_schema.dump(participant))
 
