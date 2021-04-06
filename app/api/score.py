@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from pusher import Pusher
+from werkzeug.exceptions import NotFound
 from app import db, app
 from app.models.board import Board
 from app.models.participant import Participant
