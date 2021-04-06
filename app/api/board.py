@@ -11,7 +11,7 @@ boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
 CORS(boards, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
 
 @boards.route('<code>', methods=["GET"])
-def get_board_by_id(code):
+def get_board_by_code(code):
     board = db.session.query(Board) \
         .filter(Board.code == code) \
         .first()
