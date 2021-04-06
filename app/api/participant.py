@@ -51,11 +51,6 @@ def remove_participants_by_code(code, board_code):
     .filter(Board.code == board_code)\
     .first()
 
-        if is_valid:
-            participant = db.session.query(Participant) \
-                .filter(Participant.board_id == is_valid.id) \
-                .filter(Participant.code == code) \
-                .first()
 
             db.session.delete(participant)
             db.session.commit()
