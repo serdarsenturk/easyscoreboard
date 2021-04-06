@@ -13,8 +13,6 @@ CORS(participants, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGIN
 
 @participants.route('', methods=["POST"])
 def create_participants(board_code):
-
-    try:
         is_valid = db.session.query(Board)\
         .filter(Board.code == board_code)\
         .first()
@@ -29,8 +27,6 @@ def create_participants(board_code):
             return participant_schema.dump(participant)
         else:
             raise Exception('404')
-    except ValueError:
-        return ValueError
 
 @participants.route('', methods=["GET"])
 def list_participants(board_code):
