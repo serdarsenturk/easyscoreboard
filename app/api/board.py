@@ -37,6 +37,10 @@ def modify_board_by_code(code):
     board = db.session.query(Board)\
         .filter(Board.code == code)\
         .first()
+
+    if board is None:
+        raise NotFound()
+
     name = request.json['name']
 
     board.name = name
