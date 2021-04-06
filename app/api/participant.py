@@ -51,6 +51,8 @@ def remove_participants_by_code(code, board_code):
     .filter(Board.code == board_code)\
     .first()
 
+    if board is None:
+        raise NotFound()
 
             db.session.delete(participant)
             db.session.commit()
