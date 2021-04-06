@@ -19,8 +19,8 @@ pusher = Pusher(
 )
 
 @scores.route('', methods=["PUT"])
-    is_valid = db.session.query(Board) \
 def add_score_by_code(participant_code, board_code):
+    board = db.session.query(Board) \
         .filter(Board.code == board_code) \
         .first()
 
