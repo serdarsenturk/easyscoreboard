@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 from app import db, app
 from app.models.board import Board
-from app.schema.board import boards_schema, board_schema
 from flask_cors import CORS
+from app.schema.board import board_schema
 import base62
 
 boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
