@@ -5,7 +5,9 @@ from app.schema.participant import ParticipantSchema
 class BoardSchema(ma.SQLAlchemySchema):
     class Meta:
         model = Board
-        fields = ('code', 'name', 'participants')
+
+    code = ma.auto_field()
+    name = ma.auto_field()
     participants = ma.Nested(ParticipantSchema, many=True)
 
 board_schema = BoardSchema()
