@@ -46,10 +46,10 @@ def list_participants(board_code):
     return jsonify(participants_schema.dump(participant_list))
 
 @participants.route('/<code>', methods=["DELETE"])
-        is_valid = db.session.query(Board)\
-        .filter(Board.code == board_code)\
-        .first()
 def remove_participants_by_code(code, board_code):
+    board = db.session.query(Board)\
+    .filter(Board.code == board_code)\
+    .first()
 
         if is_valid:
             participant = db.session.query(Participant) \
