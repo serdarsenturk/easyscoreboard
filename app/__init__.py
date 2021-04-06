@@ -29,6 +29,8 @@ app.register_blueprint(participants_api)
 app.register_blueprint(scores_api)
 app.register_blueprint(home)
 
+#Register error handlers
+app.register_error_handler(404, handle_not_found)
 # Build the database:
 # This will create the database file using SQLAlchemy
 db.create_all()
