@@ -46,7 +46,6 @@ def list_participants(board_code):
     return jsonify(participants_schema.dump(participant_list))
 
 @participants.route('/<code>', methods=["DELETE"])
-    try:
         is_valid = db.session.query(Board)\
         .filter(Board.code == board_code)\
         .first()
@@ -64,8 +63,6 @@ def remove_participants_by_code(code, board_code):
             return ('', 204)
         else:
             raise Exception('404')
-    except ValueError:
-        return ValueError
 
 @participants.route('/<code>/name', methods=["PUT"])
 def modify_participants_by_id(code, board_code):
