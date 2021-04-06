@@ -33,7 +33,7 @@ def create_board():
     return board_schema.dump(new_board)
 
 @boards.route('/<code>/name', methods=["PUT"])
-def modify_board_by_id(code):
+def modify_board_by_code(code):
     board = db.session.query(Board)\
         .filter(Board.code == code)\
         .first()
