@@ -65,10 +65,11 @@ def remove_participants_by_code(code, board_code):
     return '', 204
 
 @participants.route('/<code>/name', methods=["PUT"])
-        is_valid = db.session.query(Board)\
-        .filter(Board.code == board_code)\
-        .first()
 def modify_participants_by_code(code, board_code):
+    board = db.session.query(Board)\
+    .filter(Board.code == board_code)\
+    .first()
+
 
         if is_valid:
             participant = db.session.query(Participant) \
