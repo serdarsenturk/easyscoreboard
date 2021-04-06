@@ -15,12 +15,11 @@ def get_board_by_code(code):
     board = db.session.query(Board) \
         .filter(Board.code == code) \
         .first()
-    return jsonify(board_schema.dump(board))
 
-@boards.route('/', methods=["GET"])
-def list_boards():
-    boards = Board.query.all()
-    return jsonify(boards_schema.dump(boards))
+    if board is None:
+        raise NotFound()
+
+    return jsonify(board_schema.dump(board))
 
 @boards.route('/', methods=["POST"])
 def create_board():
