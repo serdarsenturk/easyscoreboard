@@ -36,4 +36,5 @@ def add_score_by_code(participant_code, board_code):
     participant.score += increment
 
     db.session.commit()
+    pusher.trigger(f"participant-{participant.code}", 'score-updated', participant.score)
     return jsonify(participant_schema.dump(participant))
