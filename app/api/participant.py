@@ -37,6 +37,7 @@ def create_participants(board_code):
     db.session.add(participant)
     db.session.commit()
 
+    pusher.trigger(f"participant-{participant.code}", 'board-updated', participant.code)
     return participant_schema.dump(participant)
 
 @participants.route('', methods=["GET"])
@@ -92,5 +93,6 @@ def modify_participants_by_code(code, board_code):
 
     db.session.commit()
 
+    pusher.trigger(f"participant-{participant.code}", 'board-updated', participant.code)
     return jsonify(participant_schema.dump(participant))
 
