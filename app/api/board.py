@@ -56,5 +56,7 @@ def modify_board_by_code(code):
     board.name = name
 
     db.session.commit()
-    pusher.trigger(f"board-{board.code}", 'board-updated', board.code)
+
+    pusher.trigger(f"board-{code}", 'updated', None)
+
     return board_schema.dump(board)
