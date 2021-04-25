@@ -7,9 +7,18 @@ from app.models.participant import Participant
 from app.schema.participant import participant_schema, participants_schema
 from flask_cors import CORS
 import base62
+from pusher import Pusher
 
 participants = Blueprint('participants', __name__, url_prefix='/api/v1/boards/<board_code>/participants')
 CORS(participants, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
+
+pusher = Pusher(
+    app_id=app.config.get('PUSHER_APP_ID'),
+    key=app.config.get('PUSHER_KEY'),
+    secret=app.config.get('PUSHER_SECRET'),
+    cluster='eu',
+    ssl=True
+)
 
 @participants.route('', methods=["POST"])
 def create_participants(board_code):
@@ -27,6 +36,8 @@ def create_participants(board_code):
 
     db.session.add(participant)
     db.session.commit()
+
+    pusher.trigger(f"board-{board_code}", 'updated', None)
 
     return participant_schema.dump(participant)
 
@@ -60,6 +71,7 @@ def remove_participants_by_code(code, board_code):
         .first()
 
     db.session.delete(participant)
+
     db.session.commit()
 
     return '', 204
