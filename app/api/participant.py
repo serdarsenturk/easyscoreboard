@@ -95,7 +95,5 @@ def modify_participants_by_code(code, board_code):
 
     db.session.commit()
 
-    pusher.trigger(f"board-{board_code}", 'updated', None)
-
     return jsonify(participant_schema.dump(participant))
 
