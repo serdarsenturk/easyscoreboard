@@ -8,7 +8,7 @@ from app.handlers.error_handlers import handle_not_found
 from config import Config
 
 #Define the WSGI application object
-app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__)
 ma = Marshmallow(app)
 
 # Configurations
