@@ -1,9 +1,7 @@
-import json
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
-from werkzeug.exceptions import HTTPException
 from app.handlers.error_handlers import handle_not_found
 from config import Config
 
