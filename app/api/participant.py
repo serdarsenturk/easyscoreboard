@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy import Sequence
 from werkzeug.exceptions import NotFound
-from app import db, app
+from .. import db
 from app.models.board import Board
 from app.models.participant import Participant
 from app.schema.participant import participant_schema, participants_schema
@@ -10,15 +10,7 @@ import base62
 from pusher import Pusher
 
 participants = Blueprint('participants', __name__, url_prefix='/api/v1/boards/<board_code>/participants')
-CORS(participants, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
-
-pusher = Pusher(
-    app_id=app.config.get('PUSHER_APP_ID'),
-    key=app.config.get('PUSHER_KEY'),
-    secret=app.config.get('PUSHER_SECRET'),
-    cluster='eu',
-    ssl=True
-)
+CORS(participants, resources={r"/api/*": {"origins": 'http://localhost:3000'}})
 
 @participants.route('', methods=["POST"])
 def create_participants(board_code):
@@ -36,8 +28,6 @@ def create_participants(board_code):
 
     db.session.add(participant)
     db.session.commit()
-
-    pusher.trigger(f"board-{board_code}", 'updated', None)
 
     return participant_schema.dump(participant)
 

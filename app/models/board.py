@@ -1,4 +1,4 @@
-from app import db
+from .. import db
 
 class Board(db.Model):
     __tablename__ = 'boards'

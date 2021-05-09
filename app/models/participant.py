@@ -1,4 +1,4 @@
-from app import db
+from .. import db
 
 class Participant(db.Model):
     __tablename__ = 'participants'
