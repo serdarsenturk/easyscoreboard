@@ -19,7 +19,6 @@ pip3 install -r requirements.txt
 
 `Start to Flask app following commands:`
 ```
-export FLASK_APP=run.py
 flask run
 ```
 
@@ -50,7 +49,32 @@ docker exec -it mypostgresql psql -U postgres easyscoreboard
 `Export DB_CONNECTION_STRING URI:`
 
 ```
-export DB_CONNECTION_STRING=postgresql://postgres:somepassword@0.0.0.0:5432/easyscoreboard
+export DB_CONNECTION_STRING=postgresql://postgres:mysecretpassword@0.0.0.0:5432/easyscoreboard
 ```
 
+## How to deploy production to Heroku
 
+Create virtual environment:
+```
+python -m venv venv/
+```
+
+Activate it with `source` command:
+```
+source venv/bin/activate
+```
+
+Build procfile and install dependencies on app:
+```
+pipenv install -r requirements.txt
+```
+
+Commit last changes:
+```
+git commit -m "first commit"
+```
+
+Deploy app on Heroku:
+```
+git push heroku master
+```
