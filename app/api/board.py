@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy import Sequence
 from werkzeug.exceptions import NotFound
-from .. import db
+from app import db, app
 from app.models.board import Board
 from flask_cors import CORS
 from app.schema.board import board_schema
@@ -9,7 +9,15 @@ import base62
 from pusher import Pusher
 
 boards = Blueprint('boards', __name__, url_prefix='/api/v1/boards')
-CORS(boards, resources={r"/api/*": {"origins": 'http://localhost:3000'}})
+CORS(boards, resources={r"/api/*": {"origins": app.config.get('CORS_ORIGINS')}})
+
+pusher = Pusher(
+    app_id=app.config.get('PUSHER_APP_ID'),
+    key=app.config.get('PUSHER_KEY'),
+    secret=app.config.get('PUSHER_SECRET'),
+    cluster='eu',
+    ssl=True
+)
 
 @boards.route('<code>', methods=["GET"])
 def get_board_by_code(code):
@@ -48,5 +56,7 @@ def modify_board_by_code(code):
     board.name = name
 
     db.session.commit()
+
+    pusher.trigger(f"board-{code}", 'updated', None)
 
     return board_schema.dump(board)
