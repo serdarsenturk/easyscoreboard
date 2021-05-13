@@ -12,25 +12,43 @@ services:
       - .:/app
     depends_on:
       - database
+    networks:
+      - mynetwork
 
   database:
-      environment: 
+      environment:
         POSTGRES_USER: ${POSTGRES_USER}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         POSTGRES_DB: easyscoreboard
       env_file: .env
       image: postgres:latest
-      ports: 
+      ports:
         - 5432:5432
-      volumes: 
+      expose:
+        - 5432
+      volumes:
         - ~/dockerdata/postgresql:/var/lib/postgresql/data
-#
-#  frontend:
-#    ports:
-#      - 3000:3000
-#    build:
-#      context: ../easyscoreboard-frontend
-#    volumes:
-#      - ../easyscoreboard-frontend:/usr/src/app
-#      - /usr/src/app/node_modules
-#      - /usr/src/app/.next
+      restart: always
+      networks:
+       - mynetwork
+
+  frontend:
+    ports:
+      - 3000:3000
+    build:
+      context: ../easyscoreboard-frontend
+    env_file:
+      - ../easyscoreboard-frontend/.env
+    command: npm run dev
+    volumes:
+      - ../easyscoreboard-frontend:/usr/src
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
+    depends_on:
+      - database
+    networks:
+     - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
