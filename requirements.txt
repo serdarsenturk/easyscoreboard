@@ -34,7 +34,6 @@ mutagen==1.45.1
 ndg-httpsclient==0.5.1
 pipenv==2020.11.15
 prettytable==0.7.2
-psycopg2==2.8.4
 psycopg2-binary==2.8.6
 pusher==3.0.0
 pyasn1==0.4.8
