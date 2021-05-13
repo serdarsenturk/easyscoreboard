@@ -12,8 +12,6 @@ services:
       - .:/app
     depends_on:
       - database
-    networks:
-      - mynetwork
 
   database:
       environment:
@@ -29,8 +27,6 @@ services:
       volumes:
         - ~/dockerdata/postgresql:/var/lib/postgresql/data
       restart: always
-      networks:
-       - mynetwork
 
   frontend:
     ports:
@@ -46,9 +42,3 @@ services:
       - /usr/src/app/.next
     depends_on:
       - database
-    networks:
-     - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
