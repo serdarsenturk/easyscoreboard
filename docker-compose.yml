@@ -33,6 +33,9 @@ services:
       - 3000:3000
     build:
       context: ../easyscoreboard-frontend
+    environment:
+      BACKEND_URL: http://api:5000
+      NEXT_PUBLIC_BACKEND_URL: http://127.0.0.1:5000
     env_file:
       - ../easyscoreboard-frontend/.env
     command: npm run dev
