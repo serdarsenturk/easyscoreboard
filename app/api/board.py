@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy import Sequence
+from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import NotFound
 from app import db, app
 from app.models.board import Board
@@ -18,6 +19,19 @@ pusher = Pusher(
     cluster='eu',
     ssl=True
 )
+
+def generate_board_code(board):
+    try:
+        board.id = db.session.execute(Sequence("boards_id_seq"))
+        board.code = base62.encode(hash(('boards', board.id)), 8)[-8:]
+
+        db.session.add(board)
+        db.session.commit()
+
+        return board
+    except IntegrityError:
+        db.session.rollback()
+        return generate_board_code(board)
 
 @boards.route('<code>', methods=["GET"])
 def get_board_by_code(code):
