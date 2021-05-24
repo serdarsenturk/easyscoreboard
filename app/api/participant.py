@@ -46,6 +46,7 @@ def create_participants(board_code):
     name = request.json['name']
     participant = Participant(name=name, board_id=board.id)
 
+    generate_participant_code(participant)
     pusher.trigger(f"board-{board_code}", 'updated', None)
 
     return participant_schema.dump(participant)
