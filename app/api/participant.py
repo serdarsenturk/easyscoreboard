@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from sqlalchemy import Sequence
+from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import NotFound
 from app import db, app
 from app.models.board import Board
@@ -20,6 +21,19 @@ pusher = Pusher(
     ssl=True
 )
 
+def generate_participant_code(participant):
+    try:
+        participant.id = db.session.execute(Sequence("participants_id_seq"))
+        participant.code = base62.encode(hash(('participants', participant.id)), 8)[-8:]
+
+        db.session.add(participant)
+        db.session.commit()
+
+        return participant
+    except IntegrityError:
+        db.session.rollback()
+        return generate_participant_code(participant)
+
 @participants.route('', methods=["POST"])
 def create_participants(board_code):
     board = db.session.query(Board)\
@@ -31,12 +45,8 @@ def create_participants(board_code):
 
     name = request.json['name']
     participant = Participant(name=name, board_id=board.id)
-    participant.id = db.session.execute(Sequence("participants_id_seq"))
-    participant.code = base62.encode(hash(('participants', participant.id)), 8)[-8:]
 
-    db.session.add(participant)
-    db.session.commit()
-
+    generate_participant_code(participant)
     pusher.trigger(f"board-{board_code}", 'updated', None)
 
     return participant_schema.dump(participant)
