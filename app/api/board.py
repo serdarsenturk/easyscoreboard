@@ -50,6 +50,7 @@ def create_board():
 
     new_board = Board(name=name)
 
+    return board_schema.dump(generate_board_code(new_board))
 
 @boards.route('/<code>/name', methods=["PUT"])
 def modify_board_by_code(code):
